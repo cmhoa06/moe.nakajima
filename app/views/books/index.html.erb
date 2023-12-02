@@ -1,0 +1,40 @@
+<h2>本棚</h2>
+<table>
+  <thead>
+    <tr>
+      <th>画像</th>
+      <th>本の題名</th>
+      <th>著者</th>
+      <th>タグ（言語など）</th>
+      <th>コメント</th>
+      <th>作成日</th>
+      <th>編集</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @books.each do |book| %>
+      <tr>
+        <td>
+          <div>
+          <% if book.image? %>
+            <%= image_tag  book.image.url %>
+          <% else %>
+            <%= image_tag 'https://free-icons.net/wp-content/uploads/2020/08/life041.png' %>
+          <% end %>
+          </div>
+        </td>                    
+        <td><%= link_to book.name, book_path(book) %></td>
+        <td><%= book.author %></td>
+        <td><%= book.tag %></td>
+        <td><%= book.introduction %></td>
+        <td><%= book.updated_at&.strftime("%Y/%m/%d") %></td>
+        <td><%= link_to "詳細" , book_path(book) %></td>
+        <td><%= link_to "編集" , edit_book_path(book) %></td>
+        <td><%= button_to "削除" , book_path(book), method: :delete , data: { confirm: "本当に削除しますか？" }%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "本の登録" , new_book_path %>
